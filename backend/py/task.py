@@ -28,15 +28,17 @@ def leafFiles(files: list[File]) -> list[str]:
 Task 2
 """
 def kLargestCategories(files: list[File], k: int) -> list[str]:
-    result = []
-    parent_files = []
+    categories = {}
     for file in files:
-        if file.parent != -1:
-            parent_files.append(file.parent)
-    for file in files:
-        if file.id not in parent_files:
-            result.append(file.name)
-    return result
+        for category in file.categories:
+            if category in categories:
+                categories[category] += 1
+            else:
+                categories[category] = 1
+
+    sorted_categories = sorted(categories.keys(), key=lambda x: (-categories[x], x))
+    
+    return sorted_categories[:k]
 
 
 """
@@ -62,6 +64,7 @@ if __name__ == '__main__':
         File(233, "Folder3", ["Folder"], -1, 4096),
     ]
 
+
     assert sorted(leafFiles(testFiles)) == [
         "Audio.mp3",
         "Backup.zip",
@@ -79,3 +82,4 @@ if __name__ == '__main__':
     ]
 
     assert largestFileSize(testFiles) == 20992
+
