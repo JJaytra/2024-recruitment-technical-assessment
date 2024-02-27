@@ -44,8 +44,35 @@ def kLargestCategories(files: list[File], k: int) -> list[str]:
 """
 Task 3
 """
+
+
+
 def largestFileSize(files: list[File]) -> int:
-    return 0
+    # contains files and their sizes
+    file_sizes = {}
+    # result dict with total size
+    result = {}
+    # populate dict first
+    for file in files:
+        file_sizes[file.id] = file.size
+
+    def dfs_sizes(id):
+        total_size = file_sizes.get(id, 0)
+        for file in files:
+            if file.parent == id:
+                total_size += dfs_sizes(file.id)
+        result[id] = total_size
+        return total_size
+
+    # iterate parent files
+    for file in files:
+        if file.parent == -1:
+            dfs_sizes(file.id)
+
+    # get max
+    largest = max(result.values())
+
+    return largest
 
 
 if __name__ == '__main__':
