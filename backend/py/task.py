@@ -13,14 +13,30 @@ class File:
 Task 1
 """
 def leafFiles(files: list[File]) -> list[str]:
-    return []
+    result = []
+    parent_files = []
+    for file in files:
+        if file.parent != -1:
+            parent_files.append(file.parent)
+    for file in files:
+        if file.id not in parent_files:
+            result.append(file.name)
+    return result
 
 
 """
 Task 2
 """
 def kLargestCategories(files: list[File], k: int) -> list[str]:
-    return []
+    result = []
+    parent_files = []
+    for file in files:
+        if file.parent != -1:
+            parent_files.append(file.parent)
+    for file in files:
+        if file.id not in parent_files:
+            result.append(file.name)
+    return result
 
 
 """
